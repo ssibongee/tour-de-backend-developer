@@ -1,0 +1,1 @@
+- [01. 들어가기 : 소프트웨어의 진정한 가치는 변화이다.](https://backend-lab.notion.site/01-81622a57f4a94d2cafaeb65b7282a191)
