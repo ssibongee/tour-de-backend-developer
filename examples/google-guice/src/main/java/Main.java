@@ -1,5 +1,6 @@
 import application.EmailApplication;
 import application.FacebookApplication;
+import application.TextEditor;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
 
@@ -10,8 +11,12 @@ public class Main {
 
         FacebookApplication facebook = injector.getInstance(FacebookApplication.class);
         EmailApplication email = injector.getInstance(EmailApplication.class);
+        TextEditor vscode = injector.getInstance(TextEditor.class);
+        TextEditor sublime = injector.getInstance(TextEditor.class);
 
         facebook.sendMessage("Hello World!", "Java");
         email.sendMessage("Hello World!", "Kotlin");
+
+        assert (vscode.getChecker() == sublime.getChecker());
     }
 }
