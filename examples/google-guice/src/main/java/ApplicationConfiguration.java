@@ -1,13 +1,9 @@
 import annotation.Facebook;
 import com.google.inject.AbstractModule;
-import com.google.inject.Provides;
 import com.google.inject.Singleton;
 import com.google.inject.name.Names;
 import provider.SpellCheckerProvider;
-import service.EmailService;
-import service.FacebookService;
-import service.MessageService;
-import service.SpellChecker;
+import service.*;
 
 public class ApplicationConfiguration extends AbstractModule {
 
@@ -24,16 +20,20 @@ public class ApplicationConfiguration extends AbstractModule {
         bind(SpellChecker.class)
                 .toProvider(SpellCheckerProvider.class)
                 .in(Singleton.class);
-    }
 
+        try {
+            bind(Database.class)
+                    .toConstructor(MySQL.class.getConstructor(String.class, String.class));
+        } catch (NoSuchMethodException e) {
+            e.printStackTrace();
+        }
 
-    @Singleton
-    @Provides
-    public SpellChecker textEditorSpellChecker() {
-        String editor = "text";
-        String user = "user";
-        int timeout = 100;
+        bind(String.class)
+                .annotatedWith(Names.named("JDBC"))
+                .toInstance("jdbc:mysql://localhost:3306/test");
 
-        return new SpellChecker(editor, user, timeout);
+        bind(String.class)
+                .annotatedWith(Names.named("DB"))
+                .toInstance("MySQL");
     }
 }
